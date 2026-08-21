@@ -1,4 +1,4 @@
-# Monster E-Commerce Platform
+# E-Commerce Platform
 
 A modern, full-stack E-Commerce application featuring a React Single Page Application (SPA), a Node.js Express REST API, MongoDB storage, and secure Stripe payment integration.
 
