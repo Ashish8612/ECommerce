@@ -6,7 +6,7 @@ import { useAdminSettings } from "@/features/admin/settings/use-admin-setting";
 import { ImagePlus } from "lucide-react";
 
 const pageWrapClass = "min-h-screen bg-background";
-const contentContainerClass = "mx-auto max-w-7xl px-4 py-8";
+const contentContainerClass = "w-full px-4 sm:px-6 lg:px-8 py-6";
 const uploadPanelClass = "grid gap-6 lg:grid-cols-[380px_minmax(0,1fr)]";
 
 const cardClass = "border-border/60 bg-card/80";

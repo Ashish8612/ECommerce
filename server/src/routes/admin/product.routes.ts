@@ -274,3 +274,13 @@ adminProductRouter.put(
     res.json(ok(updatedProduct));
   }),
 );
+
+adminProductRouter.delete(
+  "/products/:id",
+  asyncHandler(async (req: Request, res: Response) => {
+    const productId = req.params.id as string;
+    const product = await Product.findByIdAndDelete(productId);
+    requireFound(product, "Product not found", 404);
+    res.json(ok({ message: "Product deleted successfully", _id: productId }));
+  }),
+);

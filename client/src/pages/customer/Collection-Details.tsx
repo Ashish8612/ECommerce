@@ -2,7 +2,6 @@ import { Commonloader } from "@/components/common/loader";
 import CustomerProductDetailsGallery from "@/components/customer/products/details/customer-product-details-gallery";
 import CustomerProductDetailsSummary from "@/components/customer/products/details/customer-product-details-summary";
 import CustomerProductRelatedCard from "@/components/customer/products/details/customer-related-product-card";
-import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/features/auth/store";
 import { useCustomerProductDetailsStore } from "@/features/customer/products/details/store";
 import { useCustomerWishlistStore } from "@/features/customer/wishlist/store";
@@ -11,22 +10,7 @@ import { ArrowLeft } from "lucide-react";
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 
-
-const pageWrapClass = "min-h-screen bg-background";
-const heroSectionClass ="border-b border-border/60 bg-gradient-to-b from-primary/10 via-background to-background";
-const heroContainerClass = "mx-auto max-w-7xl px-4 py-8";
-const backButtonClass = "mb-4 rounded-none px-0 hover:bg-transparent";
-const backIconClass = "mr-2 h-4 w-4";
-const heroContentClass = "space-y-2";
-const heroEyebrowClass = "text-sm uppercase tracking-[0.2em] text-primary";
-const heroTitleClass = "max-w-3xl text-3xl font-semibold tracking-tight text-foreground md:text-4xl";
-const contentContainerClass = "mx-auto max-w-7xl px-4 py-8";
-const contentGridClass = "grid gap-8 lg:grid-cols-[1.05fr_0.95fr]";
-const relatedSectionClass = "mt-14 space-y-5";
-const relatedHeadingWrapClass = "space-y-1";
-const relatedEyebrowClass = "text-sm uppercase tracking-[0.18em] text-primary";
-const relatedTitleClass ="text-2xl font-semibold tracking-tight text-foreground";
-const relatedGridClass = "grid gap-5 sm:grid-cols-2 xl:grid-cols-4";
+const containerClass = "mx-auto max-w-6xl px-4 sm:px-6 lg:px-8";
 
 function CollectionDetails() {
   const { id = "" } = useParams();
@@ -66,65 +50,77 @@ function CollectionDetails() {
   if (!product) return <Commonloader />;
 
   return (
-    <div className={pageWrapClass}>
-      <section className={heroSectionClass}>
-        <div className={heroContainerClass}>
-          <Button  variant="ghost" className={backButtonClass}>
-            <Link to="/collections">
-              <ArrowLeft className={backIconClass} />
-              Back to Collections
-            </Link>
-          </Button>
-          <div className={heroContentClass}>
-            <p className={heroEyebrowClass}>{product?.brand}</p>
-            <p className={heroTitleClass}>{product?.title}</p>
+    <div className="min-h-screen bg-background">
+      {/* ── Top navigation bar ── */}
+      <section className="border-b border-border/40 bg-gradient-to-br from-primary/5 via-background to-background animate-fade-in">
+        <div className={`${containerClass} py-3.5 flex items-center justify-between`}>
+          <Link
+            to="/collections"
+            className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-card px-4 py-1.5 text-xs font-semibold text-foreground/80 shadow-sm transition-all hover:border-primary/50 hover:text-primary hover:shadow-md"
+          >
+            <ArrowLeft className="h-3.5 w-3.5" />
+            Back to Collections
+          </Link>
+          <div className="text-right">
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-primary/80">{product?.brand}</p>
+            <p className="text-sm font-semibold text-foreground truncate max-w-[200px] sm:max-w-xs">{product?.title}</p>
           </div>
         </div>
       </section>
 
-      <div className={contentContainerClass}>
-        <div className={contentGridClass}>
-          <CustomerProductDetailsGallery
-            product={product}
-            selectedImage={selectedImage}
-            setSelectedImage={setSelectedImage}
-          />
+      {/* ── Main Details Grid ── */}
+      <div className={`${containerClass} py-6`}>
+        <div className="grid gap-8 lg:grid-cols-[1fr_1fr] items-start">
+          {/* Gallery with slide in */}
+          <div className="animate-fade-in-up">
+            <CustomerProductDetailsGallery
+              product={product}
+              selectedImage={selectedImage}
+              setSelectedImage={setSelectedImage}
+            />
+          </div>
 
-          <CustomerProductDetailsSummary
-            product={product}
-            selectedColor={selectedColor}
-            selectedSize={selectedSize}
-            setSelectedColor={setSelectedColor}
-            setSelectedSize={setSelectedSize}
-            toggleWishlist={() =>
-              toggleWishlist(
-                isLoaded,
-                isBootstrapped,
-                Boolean(isSignedIn),
-                isWishlistActive,
-              )
-            }
-            isWishlistActive={isWishlistActive}
-            onAddToCart={() =>
-              addToCart(isLoaded, isBootstrapped, Boolean(isSignedIn))
-            }
-          />
+          {/* Details Summary with staggered animation */}
+          <div className="animate-fade-in-up stagger-2">
+            <CustomerProductDetailsSummary
+              product={product}
+              selectedColor={selectedColor}
+              selectedSize={selectedSize}
+              setSelectedColor={setSelectedColor}
+              setSelectedSize={setSelectedSize}
+              toggleWishlist={() =>
+                toggleWishlist(
+                  isLoaded,
+                  isBootstrapped,
+                  Boolean(isSignedIn),
+                  isWishlistActive,
+                )
+              }
+              isWishlistActive={isWishlistActive}
+              onAddToCart={() =>
+                addToCart(isLoaded, isBootstrapped, Boolean(isSignedIn))
+              }
+            />
+          </div>
         </div>
 
-        {relatedProducts.length ? (
-          <section className={relatedSectionClass}>
-            <div className={relatedHeadingWrapClass}>
-              <p className={relatedEyebrowClass}>You may also like</p>
-              <p className={relatedTitleClass}>Related Products</p>
+        {/* ── Related Products ── */}
+        {relatedProducts.length > 0 && (
+          <section className="mt-14 space-y-5 animate-fade-in-up stagger-3">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary/80">You may also like</p>
+              <h2 className="text-xl font-bold tracking-tight text-foreground sm:text-2xl">Related Products</h2>
             </div>
 
-            <div className={relatedGridClass}>
-              {relatedProducts.map((item) => (
-                <CustomerProductRelatedCard key={item._id} product={item} />
+            <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {relatedProducts.map((item, i) => (
+                <div key={item._id} className={`animate-fade-in-up stagger-${Math.min(i + 1, 8)}`}>
+                  <CustomerProductRelatedCard product={item} />
+                </div>
               ))}
             </div>
           </section>
-        ) : null}
+        )}
       </div>
     </div>
   );

@@ -24,9 +24,11 @@ function AdminSettingsBannersTable({ items }: { items: AdminBanner[] }) {
     <div className={tableWrapClass}>
       <Table>
         <TableHeader>
-          <TableHead>Preview</TableHead>
-          <TableHead>Public ID</TableHead>
-          <TableHead>Created At</TableHead>
+          <TableRow>
+            <TableHead>Preview</TableHead>
+            <TableHead>Public ID</TableHead>
+            <TableHead>Created At</TableHead>
+          </TableRow>
         </TableHeader>
 
         <TableBody>

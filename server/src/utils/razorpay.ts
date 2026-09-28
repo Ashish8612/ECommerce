@@ -4,7 +4,6 @@ function checkEnv(name: string): string {
   const extractValue = process.env[name];
 
   if (!extractValue) {
-    // Return a dummy non-empty string to satisfy Razorpay SDK validation at startup
     return `dummy_${name.toLowerCase()}`;
   }
 

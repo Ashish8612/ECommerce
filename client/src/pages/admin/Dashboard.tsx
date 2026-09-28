@@ -36,7 +36,7 @@ const statsItems = [
 ] as const;
 
 const pageWrapClass = "min-h-screen bg-background";
-const contentWrapClass = "mx-auto max-w-6xl px-4 py-8";
+const contentWrapClass = "w-full px-4 sm:px-6 lg:px-8 py-6";
 const headerCardClass = "border-border bg-card";
 const wrapClass = "space-y-4";
 const titleClass = "flex items-center gap-2 text-2xl font-semibold";

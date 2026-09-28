@@ -59,39 +59,39 @@ const shell =
   "mx-auto flex h-[72px] max-w-[1600px] items-center gap-3 px-4 sm:px-6 lg:px-8";
 
 const headerClass =
-  "sticky top-0 z-50 border-b border-border/70 bg-secondary/60 backdrop-blur-xl";
+  "sticky top-0 z-50 border-b border-border/40 bg-background/90 backdrop-blur-xl shadow-sm";
 
 const textLink =
-  "inline-flex h-10 items-center gap-2 rounded-xl px-3 text-[15px] font-medium text-foreground/90 transition hover:bg-white/5 hover:text-foreground";
+  "inline-flex h-10 items-center gap-2 rounded-full px-4 text-[15px] font-medium text-foreground/80 transition-all hover:bg-primary/10 hover:text-primary";
 
 const iconLink =
-  "relative inline-flex h-10 w-10 items-center justify-center rounded-xl text-foreground/90 transition hover:bg-white/5 hover:text-foreground";
+  "relative inline-flex h-10 w-10 items-center justify-center rounded-full text-foreground/80 transition-all hover:bg-primary/10 hover:text-primary";
 
 const brandWrap = "flex shrink-0 items-center gap-3";
 
 const brandTitle =
-  "text-[25px] font-semibold tracking-[-0.02em] text-foreground";
+  "text-[25px] font-bold tracking-[-0.02em] bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent";
 
 const desktopCollectionsWrap = "ml-6 hidden lg:block";
 
 const desktopNav = "ml-auto hidden items-center gap-1 lg:flex";
 
 const dropdownButton =
-  "h-10 rounded-xl px-3 text-[15px] font-medium text-foreground/90 hover:bg-white/5 hover:text-foreground";
+  "h-10 rounded-full px-4 text-[15px] font-medium text-foreground/80 hover:bg-primary/10 hover:text-primary";
 
 const dropdownContent =
-  "mt-3 rounded-2xl border-border bg-popover/95 p-2 backdrop-blur";
+  "mt-3 rounded-2xl border-border/60 bg-popover/95 p-2 backdrop-blur shadow-xl";
 
 const accountDropdownContent = `${dropdownContent} w-56`;
 
 const dropdownItemLink =
-  "flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5";
+  "flex cursor-pointer items-center gap-3 rounded-xl px-3 py-2.5 hover:text-primary";
 
- const cartBadge =
-   "absolute -right-1 -top-1 inline-flex min-w-5 items-center justify-center rounded-full bg-amber-400 px-1.5 text-[11px] font-semibold leading-5 text-black";
+const cartBadge =
+  "absolute -right-1 -top-1 inline-flex min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] font-semibold leading-5 text-primary-foreground";
 
- const wishlistBadge =
-   "absolute -right-1 -top-1 inline-flex min-w-5 items-center justify-center rounded-full bg-amber-400 px-1.5 text-[11px] font-semibold leading-5 text-black";
+const wishlistBadge =
+  "absolute -right-1 -top-1 inline-flex min-w-5 items-center justify-center rounded-full bg-primary px-1.5 text-[11px] font-semibold leading-5 text-primary-foreground";
 
 function NavTextLink({
   href,

@@ -56,7 +56,7 @@ customerHomeRouter.get(
       Product.find({ status: "active" })
         .select("title brand price salePercentage images createdAt")
         .sort({ createdAt: -1 })
-        .limit(4)
+        .limit(12)
         .lean<ProductRow[]>(),
       Promo.find({
         startsAt: { $lte: now },

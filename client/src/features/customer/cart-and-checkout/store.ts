@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import type { AddCustomerCartItemBody, AppliedPromo, CheckoutAddressOption, CustomerCartItemIdentifier, CustomerCartResponse, GuestCartItem, SyncCustomerCartBody } from "./types";
-import { addCustomerCartItem, applyCustomerPromo, confirmCheckout, createCheckoutSession, decreaseCustomerCartItem, getCheckoutData, increaseCustomerCartItem, payWithPointsCheckout, removeCustomerCartItem, syncCustomerCart, createStripePaymentIntent, confirmStripeCheckout } from "./api";
+import { addCustomerCartItem, applyCustomerPromo, confirmCheckout, createCheckoutSession, decreaseCustomerCartItem, getCheckoutData, increaseCustomerCartItem, payWithPointsCheckout, removeCustomerCartItem, syncCustomerCart, createStripePaymentIntent } from "./api";
 import { toast } from "sonner";
 
 
@@ -387,9 +387,9 @@ export const useCustomerCartAndCheckoutStore =
         });
 
         toast.success("Promo successfully applied");
-      } catch {
+      } catch (err: any) {
         set({ appliedPromo: null, promoLoading: false });
-        toast.success("Unable to apply promo");
+        toast.error(err?.message || "Unable to apply promo");
       }
     },
     clear: () =>
@@ -403,7 +403,7 @@ export const useCustomerCartAndCheckoutStore =
       const { selectedAddressId, appliedPromo, cart } = get();
 
       if (!isSignedIn) {
-        toast.error("sign in to checkout");
+        toast.error("Sign in to checkout");
         return;
       }
 
@@ -433,19 +433,18 @@ export const useCustomerCartAndCheckoutStore =
           throw new Error("Invalid checkout session");
         }
 
-        //load the razorpay instance
-
         await waitForRazorpay();
 
         if (!(window as any).Razorpay) {
           throw new Error("Razorpay not loaded");
         }
+
         const razorpay = new (window as any).Razorpay({
           key: session.razorpay.keyId,
           amount: session.razorpay.amount,
           currency: session.razorpay.currency,
           order_id: session.razorpay.orderId,
-          name: "Monster E-commerce",
+          name: "CartCraze",
           description: "Order payment",
           prefill: { name, email },
           handler: async (response: any) => {
@@ -466,7 +465,7 @@ export const useCustomerCartAndCheckoutStore =
                 ...defaultUiState,
               });
 
-              toast.success("Payment successfull");
+              toast.success("Payment successful");
               onSuccess();
             } catch {
               set({ checkoutLoading: false });
@@ -482,7 +481,7 @@ export const useCustomerCartAndCheckoutStore =
         razorpay.open();
       } catch {
         set({ checkoutLoading: false });
-        toast.error("Unable to start checkout");
+        toast.error("Unable to start Razorpay checkout");
       }
     },
 

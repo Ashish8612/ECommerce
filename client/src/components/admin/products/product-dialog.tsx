@@ -129,7 +129,14 @@ export function ProductDialog({
                 }}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Category" />
+                  <SelectValue placeholder="Category">
+                    {(val) =>
+                      val
+                        ? categories.find((category) => category._id === val)
+                            ?.name || val
+                        : null
+                    }
+                  </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {categories.length === 0 ? (

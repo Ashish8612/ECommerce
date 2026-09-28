@@ -27,6 +27,7 @@ export type CustomerProduct = {
   sizes: ProductSize[];
   price: number;
   salePercentage: number;
+  isFeatured?: boolean;
   status: "active" | "inactive";
   createdAt: string;
   updatedAt: string;

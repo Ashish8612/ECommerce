@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Promo, PromoFormValues } from "./types";
 import { createAdminPromo, deleteAdminPromo, getAdminPromos, updateAdminPromo } from "./api";
+import { toast } from "sonner";
 
 
 
@@ -67,15 +68,13 @@ export function useAdminPromos() {
   }
 
   async function removePromo(promoId: string) {
-    const confirmed = window.confirm("Are you want to delete this promo");
-
-    if (!confirmed) return;
-
     try {
       setDeletingPromoId(promoId);
-
       const response = await deleteAdminPromo(promoId);
       setPromos((response ?? { items: [] }).items);
+      toast.success("Promo code deleted successfully");
+    } catch {
+      toast.error("Failed to delete promo code");
     } finally {
       setDeletingPromoId("");
     }

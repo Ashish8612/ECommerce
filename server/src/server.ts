@@ -2,7 +2,6 @@ import "dotenv/config"
 import express from "express";
 import cors from "cors";
 import morgan from "morgan";
-//import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { connectDB } from "./db";
 import {ok} from "./utils/envelope"

@@ -103,16 +103,6 @@ export async function createCheckoutSession(body: {
   );
 }
 
-export async function payWithPointsCheckout(body: {
-  addressId: string;
-  promoCode?: string;
-}) {
-  return apiPost<CheckoutPayWithPointsResponse, typeof body>(
-    "/customer/checkout/pay-with-points",
-    body,
-  );
-}
-
 export async function confirmCheckout(body: {
   orderId: string;
   razorpay_payment_id: string;
@@ -121,6 +111,16 @@ export async function confirmCheckout(body: {
 }) {
   return apiPost<CheckoutConfirmResponse, typeof body>(
     "/customer/checkout/confirm",
+    body,
+  );
+}
+
+export async function payWithPointsCheckout(body: {
+  addressId: string;
+  promoCode?: string;
+}) {
+  return apiPost<CheckoutPayWithPointsResponse, typeof body>(
+    "/customer/checkout/pay-with-points",
     body,
   );
 }

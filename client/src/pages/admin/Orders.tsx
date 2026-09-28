@@ -11,7 +11,7 @@ import { useEffect } from "react";
 
 
 const pageWrapClass = "min-h-screen bg-background";
-const contentWrapClass = "mx-auto max-w-7xl px-4 py-8";
+const contentWrapClass = "w-full px-4 sm:px-6 lg:px-8 py-6";
 const cardClass = "border-border bg-card";
 const wrapClass = "space-y-4";
 const topRowClass =
@@ -95,13 +95,15 @@ function AdminOrders() {
               <div className={tableWrapClass}>
                 <Table>
                   <TableHeader>
-                    <TableHead>Order</TableHead>
-                    <TableHead>Customer</TableHead>
-                    <TableHead>Items</TableHead>
-                    <TableHead>Amount</TableHead>
-                    <TableHead>Payment</TableHead>
-                    <TableHead>Paid at</TableHead>
-                    <TableHead className="text-right">Update</TableHead>
+                    <TableRow>
+                      <TableHead>Order</TableHead>
+                      <TableHead>Customer</TableHead>
+                      <TableHead>Items</TableHead>
+                      <TableHead>Amount</TableHead>
+                      <TableHead>Payment</TableHead>
+                      <TableHead>Paid at</TableHead>
+                      <TableHead className="text-right">Update</TableHead>
+                    </TableRow>
                   </TableHeader>
 
                   <TableBody>
@@ -139,7 +141,14 @@ function AdminOrders() {
                                 disabled={updatingOrderId === order._id}
                               >
                                 <SelectTrigger className={selectTriggerClass}>
-                                  <SelectValue placeholder="Update Status" />
+                                  <SelectValue placeholder="Update Status">
+                                    {(val) =>
+                                      typeof val === "string" && val
+                                        ? val.charAt(0).toUpperCase() +
+                                          val.slice(1)
+                                        : null
+                                    }
+                                  </SelectValue>
                                 </SelectTrigger>
                                 <SelectContent>
                                   {orderStatusOptions.map((status) => (

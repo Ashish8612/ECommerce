@@ -144,7 +144,6 @@ export function useProductForm({
       setSaving(true);
 
       if (product) {
-        //edit
 
         await updateAdminProduct(
           product._id,

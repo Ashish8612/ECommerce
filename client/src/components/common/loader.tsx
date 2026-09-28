@@ -18,13 +18,16 @@ type CommonLoaderProps = {
 export function Commonloader({
   text = "Loading...",
   className,
-  iconClassName,
 }: CommonLoaderProps) {
   return (
     <div className={cn(wrapClass, className)}>
       <div className={contentClass}>
-        <Loader2 className={cn(iconClass, iconClassName)} />
-        <p>{text}</p>
+        <div className="relative flex h-16 w-16 items-center justify-center">
+          <div className="absolute h-full w-full animate-ping rounded-full bg-primary/20 opacity-75"></div>
+          <div className="absolute h-12 w-12 animate-pulse rounded-full bg-primary/40"></div>
+          <div className="h-6 w-6 animate-bounce rounded-full bg-primary shadow-lg shadow-primary/30"></div>
+        </div>
+        <p className="mt-4 font-semibold tracking-wide animate-pulse text-foreground/80">{text}</p>
       </div>
     </div>
   );

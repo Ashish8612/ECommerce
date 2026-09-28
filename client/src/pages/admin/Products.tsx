@@ -31,10 +31,11 @@ function AdminProducts(){
     editingProduct,
     openCreateDialog,
     closeProductDialog,
-     refreshAll,
-     openEditDialog,
+    refreshAll,
+    openEditDialog,
+    deleteProduct,
+    deletingProductId,
   } = useAdminProducts();
-
 
   return (
     <div className={pageWrap}>
@@ -53,6 +54,8 @@ function AdminProducts(){
             loading={loading}
             products={products}
             onEdit={openEditDialog}
+            onDelete={deleteProduct}
+            deletingProductId={deletingProductId}
           />
         </CardContent>
       </Card>

@@ -14,8 +14,6 @@ import { Order } from "../../models/Order";
 import { Types } from "mongoose";
 import { createHmac } from "node:crypto";
 
-
-
 type UserAddressRow = {
   _id: Types.ObjectId;
   fullName: string;
@@ -73,7 +71,6 @@ customerCheckoutRouter.post(
     requireText(addressId, "Address is required");
 
     //get user and cart info
-
     const [user, cart] = await Promise.all([
       User.findById(dbUser._id)
         .select("name email addresses")
@@ -114,7 +111,7 @@ customerCheckoutRouter.post(
       const product = productMap.get(String(cartItem.product));
 
       if (!product || product.status !== "active") {
-        throw new AppError(400, "One or more cart items are not avaibale");
+        throw new AppError(400, "One or more cart items are not available");
       }
 
       if (product.stock < cartItem.quantity) {
@@ -158,7 +155,7 @@ customerCheckoutRouter.post(
       if (subTotal < foundPromo.minimumOrderValue) {
         throw new AppError(
           400,
-          "Minimum order value for this promo is not at the threesold",
+          "Minimum order value for this promo is not at the threshold",
         );
       }
 

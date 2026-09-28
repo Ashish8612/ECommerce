@@ -75,7 +75,6 @@ function CustomerCartAndCheckoutDrawer() {
     appliedPromo,
     points,
     promoLoading,
-    checkoutLoading,
     stripeCheckoutLoading,
     pointsCheckoutLoading,
     stripeClientSecret,
@@ -86,7 +85,6 @@ function CustomerCartAndCheckoutDrawer() {
     setPromoInput,
     clearPromo,
     applyPromo,
-    startRazorpayCheckout,
     startStripeCheckout,
     startPointsCheckout,
     loading,
@@ -219,38 +217,12 @@ function CustomerCartAndCheckoutDrawer() {
                           !cart.items.length ||
                           !selectedAddressId ||
                           stripeCheckoutLoading ||
-                          checkoutLoading ||
                           pointsCheckoutLoading
                         }
                       >
                         {stripeCheckoutLoading
                           ? "Processing..."
                           : "Pay with Stripe"}
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          void setOpen(false);
-                          void startRazorpayCheckout({
-                            isSignedIn: Boolean(isSignedIn),
-                            name: user?.fullName || "Customer",
-                            email:
-                              user?.primaryEmailAddress?.emailAddress || "",
-                            onSuccess: () => navigate("/order-success"),
-                          });
-                        }}
-                        type="button"
-                        className={primaryButtonClass}
-                        disabled={
-                          loading ||
-                          !cart.items.length ||
-                          !selectedAddressId ||
-                          checkoutLoading ||
-                          pointsCheckoutLoading
-                        }
-                      >
-                        {checkoutLoading
-                          ? "Processing..."
-                          : "Pay with Razorpay"}
                       </Button>
                       <Button
                         onClick={() => {
@@ -265,7 +237,7 @@ function CustomerCartAndCheckoutDrawer() {
                             Boolean(selectedAddressId) &&
                             Boolean(cart.items.length) &&
                             points >= totalAmount &&
-                            !checkoutLoading &&
+                            !stripeCheckoutLoading &&
                             !pointsCheckoutLoading
                           )
                         }
