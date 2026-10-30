@@ -43,6 +43,8 @@ function AdminSettings() {
     refreshBanners,
     handleUpload,
     uploading,
+    handleDeleteBanner,
+    deletingBannerId,
   } = useAdminSettings();
 
   return (
@@ -101,7 +103,11 @@ function AdminSettings() {
               {loading ? null : !items.length ? (
                 <div className={emptyStateClass}>No banners uploaded yet !</div>
               ) : (
-                <AdminSettingsBannersTable items={items} />
+                <AdminSettingsBannersTable
+                  items={items}
+                  onDelete={handleDeleteBanner}
+                  deletingBannerId={deletingBannerId}
+                />
               )}
             </CardContent>
           </Card>

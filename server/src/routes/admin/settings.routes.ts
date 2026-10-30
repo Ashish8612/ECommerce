@@ -5,7 +5,10 @@ import { getDbUserFromReq, requireAdmin } from "../../middleware/auth";
 import { asyncHandler } from "../../utils/asyncHandler";
 import { ok } from "../../utils/envelope";
 import { AppError } from "../../utils/AppError";
-import { uploadManyBuffersToCloudinary } from "../../utils/cloudinary";
+import {
+  deleteImageFromCloudinary,
+  uploadManyBuffersToCloudinary,
+} from "../../utils/cloudinary";
 
 
 
@@ -80,6 +83,31 @@ adminSettingsRouter.post(
     res.json(
       ok({
         items: createFinalBanners.map(mapBanner),
+      }),
+    );
+  }),
+);
+
+adminSettingsRouter.delete(
+  "/settings/banners/:bannerId",
+  asyncHandler(async (req: Request, res: Response) => {
+    const bannerId = String(req.params.bannerId || "").trim();
+    if (!bannerId) {
+      throw new AppError(400, "Banner Id is required");
+    }
+
+    const banner = await Banner.findById(bannerId);
+    if (!banner) {
+      throw new AppError(404, "Banner not found");
+    }
+
+    await deleteImageFromCloudinary(banner.imagePublicId);
+    await Banner.findByIdAndDelete(bannerId);
+
+    const items = await Banner.find().sort({ createdAt: -1 });
+    res.json(
+      ok({
+        items: items.map(mapBanner),
       }),
     );
   }),

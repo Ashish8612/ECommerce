@@ -1,5 +1,6 @@
 import {v2 as cloudinary} from 'cloudinary'
 import streamifier from 'streamifier'
+import { AppError } from "./AppError";
 
 
 type CloudinaryUploadResult = {
@@ -66,4 +67,20 @@ export async function uploadManyBuffersToCloudinary(
   return Promise.all(
     files.map((file) => uploadSingleBufferToCloudinary(file, folder)),
   );
+}
+
+export async function deleteImageFromCloudinary(publicId: string): Promise<void> {
+  if (publicId.startsWith("dummy_cloudinary_")) return;
+
+  if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
+    throw new AppError(503, "Cloudinary credentials are required to delete this banner");
+  }
+
+  const result = await cloudinary.uploader.destroy(publicId, {
+    resource_type: "image",
+  });
+
+  if (result.result !== "ok" && result.result !== "not found") {
+    throw new AppError(502, "Cloudinary could not delete this banner image");
+  }
 }
